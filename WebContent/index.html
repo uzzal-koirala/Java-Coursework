@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+    <html lang="ne">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>मेरो सरकार - आधिकारिक सरकारी पोर्टल</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+
+    <body>
+
+        <!-- Enhanced Top Bar -->
+        <div class="top-bar">
+            <div class="container top-bar-content">
+                <div class="top-left-info">
+                    <div class="top-date">
+                        <i class="far fa-calendar-alt"></i> <span id="currentDate">१४ वैशाख २०८३, आइतबार</span>
+                    </div>
+                    <div class="top-links">
+                        <a href="#"><i class="fas fa-globe"></i> नेपाली</a>
+                        <a href="#"><i class="fas fa-language"></i> English</a>
+                        <a href="#"><i class="fas fa-archive"></i> अभिलेख</a>
+                    </div>
+                </div>
+                <div class="top-right-actions">
+                    <div class="emergency-line">
+                        <i class="fas fa-phone-volume"></i> आपतकालीन नम्बर: ११४४
+                    </div>
+                    <div class="accessibility-tools">
+                        <i class="fas fa-minus-circle" title="Font Decrease"></i>
+                        <i class="fas fa-font" title="Reset Font"></i>
+                        <i class="fas fa-plus-circle" title="Font Increase"></i>
+                        <i class="fas fa-adjust" title="Contrast Toggle" style="margin-left: 10px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header Refined -->
+        <header>
+            <div class="container header-main">
+                <div class="logo-section">
+                    <img src="images/logo.png" alt="Nepal Government Logo">
+                    <div class="logo-divider"></div>
+                    <div class="logo-text">
+                        <h1>मेरो सरकार</h1>
+                        <p>नागरिक सेवा तथा गुनासो पोर्टल</p>
+                    </div>
+                </div>
+                <div class="mobile-menu-btn" onclick="document.querySelector('.nav-menu').classList.toggle('active')">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <nav class="nav-menu">
+                    <a href="index.html"><i class="fas fa-home"></i> गृहपृष्ठ</a>
+                    <a href="#"><i class="fas fa-building"></i> मन्त्रालयहरू</a>
+                    <a href="#"><i class="fas fa-concierge-bell"></i> सेवाहरू</a>
+                    <a href="#"><i class="fas fa-bullhorn"></i> सुचना</a>
+                    <a href="#"><i class="fas fa-info-circle"></i> हाम्रो बारेमा</a>
+                    <a href="login.html" class="btn-gov" style="display: none; margin-top: 10px;">
+                        <i class="fas fa-user-lock"></i> लगइन
+                    </a>
+                </nav>
+                <div class="header-right">
+                    <div class="search-trigger" title="Search">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <a href="login.html" class="btn-gov">
+                        <i class="fas fa-user-lock"></i> लगइन
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Portal Hero Banner -->
+        <section class="hero-portal" style="background-image: url('nepal_government_hero_1777224383614.png');">
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <span class="hero-badge"><i class="fas fa-check-circle" style="color: var(--gov-gold);"></i> आधिकारिक पोर्टल</span>
+                    <h2>मेरो सरकार: नागरिक सेवा पोर्टल</h2>
+                    <p>सुशासनको आधार, नागरिकको अधिकार। नेपाल सरकारको एकीकृत डिजिटल सेवा तथा गुनासो व्यवस्थापन प्रणालीमा तपाईंलाई स्वागत छ।</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h4>५००+</h4>
+                            <p>डिजिटल सेवाहरू</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>१४+</h4>
+                            <p>मन्त्रालयहरू</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>२४/७</h4>
+                            <p>सहायता डेस्क</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Action Bar -->
+        <section class="container">
+            <div class="action-grid">
+                <div class="action-card">
+                    <div class="icon-box"><i class="fas fa-file-signature"></i></div>
+                    <h4>गुनासो दर्ता</h4>
+                </div>
+                <div class="action-card">
+                    <div class="icon-box"><i class="fas fa-search-location"></i></div>
+                    <h4>स्थिति जाँच</h4>
+                </div>
+                <div class="action-card">
+                    <div class="icon-box"><i class="fas fa-user-check"></i></div>
+                    <h4>अधिकारी लगइन</h4>
+                </div>
+                <div class="action-card">
+                    <div class="icon-box"><i class="fas fa-question-circle"></i></div>
+                    <h4>सहायता केन्द्र</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Portal Content -->
+        <section class="container portal-container">
+            <!-- Service Directory -->
+            <div class="service-directory">
+                <div class="section-header" style="border: none; margin-bottom: 20px;">
+                    <h3 style="font-size: 1.5rem;">सेवा निर्देशिका</h3>
+                </div>
+                <div class="service-grid-dense">
+                    <div class="service-item-dense">
+                        <i class="fas fa-id-card"></i>
+                        <h5>नागरिकता</h5>
+                    </div>
+                    <div class="service-item-dense">
+                        <i class="fas fa-passport"></i>
+                        <h5>राहदानी</h5>
+                    </div>
+                    <div class="service-item-dense">
+                        <i class="fas fa-car"></i>
+                        <h5>लाइसेन्स</h5>
+                    </div>
+                    <div class="service-item-dense">
+                        <i class="fas fa-home"></i>
+                        <h5>मालपोत</h5>
+                    </div>
+                    <div class="service-item-dense">
+                        <i class="fas fa-briefcase-medical"></i>
+                        <h5>स्वास्थ्य</h5>
+                    </div>
+                    <div class="service-item-dense">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h5>शिक्षा</h5>
+                    </div>
+                    <div class="service-item-dense">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <h5>राजस्व</h5>
+                    </div>
+                    <div class="service-item-dense">
+                        <i class="fas fa-ellipsis-h"></i>
+                        <h5>थप सेवाहरू</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notice Board -->
+            <div class="notice-board">
+                <div class="notice-header">
+                    <i class="fas fa-bullhorn"></i> सूचना तथा जानकारी
+                </div>
+                <ul class="notice-list">
+                    <li class="notice-item">
+                        <span class="date">१४ वैशाख २०८३</span>
+                        <p>डिजिटल गुनासो प्रणालीको नयाँ मोबाइल एप सार्वजनिक गरिएको सूचना।</p>
+                    </li>
+                    <li class="notice-item">
+                        <span class="date">१२ वैशाख २०८३</span>
+                        <p>स्थानीय निकायका सेवाहरूमा लाग्ने दस्तुर परिमार्जन सम्बन्धमा।</p>
+                    </li>
+                    <li class="notice-item">
+                        <span class="date">१० वैशाख २०८३</span>
+                        <p>सार्वजनिक विदाका दिन पनि निश्चित सेवाहरू सुचारु रहने बारे।</p>
+                    </li>
+                </ul>
+                <a href="#"
+                    style="display: block; text-align: center; padding: 15px; color: var(--gov-blue); font-weight: 700; border-top: 1px solid #f1f5f9;">सबै
+                    सूचनाहरू हेर्नुहोस्</a>
+            </div>
+        </section>
+
+        <!-- Press Center -->
+        <section class="container press-center">
+            <div class="section-header">
+                <h3>प्रेस सेन्टर</h3>
+                <a href="#" style="color: var(--gov-blue); font-weight: 700;">सबै समाचार <i
+                        class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="news-portal-grid">
+                <div class="featured-news">
+                    <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=1200" alt="Featured">
+                    <div class="featured-content">
+                        <span class="hero-badge" style="background: var(--gov-red); border: none; color: white;">मुख्य
+                            समाचार</span>
+                        <h3 style="font-size: 1.8rem; margin-top: 10px;">सुशासन प्रवर्द्धनका लागि एकीकृत डिजिटल प्रणाली
+                            सञ्चालनमा</h3>
+                        <p style="margin-top: 10px; opacity: 0.8;">प्रधानमन्त्री कार्यालयले सबै सरकारी निकायहरूलाई एकै
+                            ठाउँमा जोड्ने नयाँ कार्ययोजना सार्वजनिक गरेको छ।</p>
+                    </div>
+                </div>
+                <div class="news-list-sidebar">
+                    <div class="news-item-compact">
+                        <div class="news-thumb"
+                            style="background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=200');">
+                        </div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">१२ वैशाख २०८३</span>
+                            <h5>स्थानीय निकायका ५०० भन्दा बढी सेवाहरू अब अनलाइनमा</h5>
+                        </div>
+                    </div>
+                    <div class="news-item-compact">
+                        <div class="news-thumb"
+                            style="background-image: url('https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=200');">
+                        </div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">१० वैशाख २०८३</span>
+                            <h5>गुनासो व्यवस्थापनमा उत्कृष्ट कार्य गर्ने ५ वडा पुरस्कृत</h5>
+                        </div>
+                    </div>
+                    <div class="news-item-compact">
+                        <div class="news-thumb"
+                            style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=200');">
+                        </div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">०८ वैशाख २०८३</span>
+                            <h5>डिजिटल साक्षरता अभियान देशभर सञ्चालन गरिने</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <img src="images/logo.png" alt="Logo"
+                            style="height: 60px; filter: brightness(0) invert(1); margin-bottom: 20px;">
+                        <h4>मेरो सरकार</h4>
+                        <p>नेपाल सरकारको एकीकृत डिजिटल सेवा तथा गुनासो व्यवस्थापन प्रणाली। सुशासनको आधार, नागरिकको
+                            अधिकार।</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>महत्वपूर्ण लिङ्कहरू</h4>
+                        <ul>
+                            <li><a href="#">नेपाल सरकार</a></li>
+                            <li><a href="#">प्रधानमन्त्री कार्यालय</a></li>
+                            <li><a href="#">सचिवालय</a></li>
+                            <li><a href="#">लोक सेवा आयोग</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>सेवाहरू</h4>
+                        <ul>
+                            <li><a href="#">नागरिकता</a></li>
+                            <li><a href="#">राहदानी</a></li>
+                            <li><a href="#">पञ्जीकरण</a></li>
+                            <li><a href="#">राजस्व भुक्तानी</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>सम्पर्क</h4>
+                        <p>सिंहदरबार, काठमाडौं</p>
+                        <p>फोन: १६६०-०१-१११११</p>
+                        <p>इमेल: info@merosarkar.gov.np</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; २०२६ मेरो सरकार | सर्वाधिकार सुरक्षित।</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-twitter fa-lg" style="margin-left: 20px;"></i></a>
+                        <a href="#"><i class="fab fa-youtube fa-lg" style="margin-left: 20px;"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </body>
+
+    </html>

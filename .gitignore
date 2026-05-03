@@ -1,0 +1,33 @@
+# Java
+*.class
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Build systems
+WebContent/WEB-INF/classes/
+
+# IDE files
+.idea/
+.settings/
+.project
+.classpath
+*.iml
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log

@@ -1,0 +1,24 @@
+CREATE DATABASE IF NOT EXISTS mero_sarkar_db;
+USE mero_sarkar_db;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('CITIZEN', 'MAYOR', 'CM', 'PM', 'WARD_OFFICER') NOT NULL,
+    status ENUM('PENDING', 'APPROVED', 'BLOCKED') NOT NULL DEFAULT 'APPROVED',
+    profile_pic VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE complaints (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    citizen_id INT NOT NULL,
+    official_role ENUM('MAYOR', 'CM', 'PM', 'WARD_OFFICER') NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    status ENUM('PENDING', 'IN_PROGRESS', 'RESOLVED') NOT NULL DEFAULT 'PENDING',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (citizen_id) REFERENCES users(id) ON DELETE CASCADE
+);
