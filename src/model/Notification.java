@@ -14,6 +14,7 @@ public class Notification {
     // Additional fields for rendering
     private String actorName;
     private String actorAvatar;
+    private String message;
 
     // Getters and Setters
     public int getId() { return id; }
@@ -34,4 +35,6 @@ public class Notification {
     public void setActorName(String actorName) { this.actorName = actorName; }
     public String getActorAvatar() { return actorAvatar; }
     public void setActorAvatar(String actorAvatar) { this.actorAvatar = actorAvatar; }
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
 }
