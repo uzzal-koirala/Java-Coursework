@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    
+    <display-name>Gunaso Management System</display-name>
+
+    <!-- ================================================================
+         DATABASE CREDENTIALS — change these to match your MySQL setup.
+         Never hardcode credentials inside Java source files.
+         [Reload Context Trigger: Refreshing all filters and servlets]
+         ================================================================ -->
+    <context-param>
+        <param-name>db.url</param-name>
+        <param-value>jdbc:mysql://localhost:3306/gunaso_db?useSSL=true&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.username</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.password</param-name>
+        <!-- IMPORTANT: Set your actual MySQL password here before deploying -->
+        <param-value></param-value>
+    </context-param>
+
+    <!-- ================================================================
+         SESSION SECURITY
+         ================================================================ -->
+    <session-config>
+        <!-- Session expires after 30 minutes of inactivity -->
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <!-- HttpOnly: prevents JavaScript from reading the session cookie -->
+            <http-only>true</http-only>
+            <!-- Secure: only send cookie over HTTPS (enable when deploying with SSL) -->
+            <!-- <secure>true</secure> -->
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/unauthorized.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500.jsp</location>
+    </error-page>
+
+</web-app>

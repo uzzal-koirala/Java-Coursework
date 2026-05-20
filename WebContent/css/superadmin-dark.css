@@ -1,0 +1,208 @@
+/* css/superadmin-dark.css */
+:root {
+    --primary: #3b82f6;
+    --primary-light: #60a5fa;
+    --secondary: #ef4444;
+    --text-main: #f8fafc;
+    --text-light: #94a3b8;
+    --bg-light: #090d16;
+    --white: #111827; /* Unified deep dark card bg */
+    
+    --glass-bg: rgba(17, 24, 39, 0.7); /* Consistent translucent dark gray */
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+body {
+    background: #090d16 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.04), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.04), transparent 40%) !important;
+    color: var(--text-main) !important;
+}
+
+/* Force override any hardcoded whites */
+.modal-content-card,
+.stat-card,
+.data-table-container,
+.filter-bar,
+.settings-card {
+    background: var(--glass-bg) !important;
+    border-color: var(--glass-border) !important;
+}
+
+input, select, textarea {
+    background: rgba(17, 24, 39, 0.8) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+}
+
+.search-box input {
+    background: rgba(17, 24, 39, 0.85) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+}
+.search-box input:focus {
+    background: rgba(17, 24, 39, 0.95) !important;
+    border-color: var(--primary-light) !important;
+}
+
+.notification-dot {
+    border-color: #111827 !important;
+}
+
+.sidebar-profile {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid var(--glass-border) !important;
+}
+.sidebar-header {
+    border-bottom: 1px solid var(--glass-border) !important;
+}
+
+.data-table th {
+    background: #1f2937 !important;
+    color: var(--text-light) !important;
+}
+
+.data-table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-main) !important;
+}
+
+.data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Override sidebar active state */
+.sidebar-menu li a.active {
+    background: var(--primary) !important;
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2) !important;
+}
+
+.dashboard-hero {
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%) !important;
+}
+
+/* Specific text overrides */
+h1, h2, h3, h4, h5, h6, p {
+    color: var(--text-main) !important;
+}
+.text-light {
+    color: var(--text-light) !important;
+}
+
+/* Sidebar profile name override */
+.profile-info h4 {
+    color: var(--text-main) !important;
+}
+
+/* Sidebar text override */
+.sidebar-menu li a {
+    color: var(--text-light) !important;
+}
+.sidebar-menu li a:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--primary) !important;
+}
+
+/* Navbar specific dark mode styles */
+.navbar {
+    background: var(--glass-bg) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+}
+.navbar-brand h2, .navbar-menu li a, .navbar-user h4 {
+    color: var(--text-main) !important;
+}
+
+/* Footer specific dark mode styles */
+.footer {
+    background: var(--glass-bg) !important;
+    border-top: 1px solid var(--glass-border) !important;
+    color: var(--text-light) !important;
+}
+
+/* Badges overrides */
+.badge-pending { background: rgba(245, 158, 11, 0.2) !important; color: #fcd34d !important; }
+.badge-review, .badge-in-progress { background: rgba(59, 130, 246, 0.2) !important; color: #93c5fd !important; }
+.badge-resolved { background: rgba(16, 185, 129, 0.2) !important; color: #6ee7b7 !important; }
+.badge-rejected { background: rgba(239, 68, 68, 0.2) !important; color: #fca5a5 !important; }
+.badge-status.badge-active { background: rgba(16, 185, 129, 0.2) !important; color: #6ee7b7 !important; }
+.badge-status.badge-deactivated { background: rgba(239, 68, 68, 0.2) !important; color: #fca5a5 !important; }
+
+/* Modal body style fixes */
+.modal-header {
+    border-bottom: 1px solid var(--glass-border) !important;
+    background: var(--white) !important;
+    color: var(--text-main) !important;
+}
+.modal-header h3 {
+    color: var(--text-main) !important;
+}
+.modal-close-btn {
+    color: var(--text-light) !important;
+}
+.modal-footer {
+    border-top: 1px solid var(--glass-border) !important;
+    background: rgba(15, 23, 42, 0.2) !important;
+}
+
+/* Department Card aesthetic override for dark mode */
+.dept-card {
+    background: rgba(30, 41, 59, 0.6) !important;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Sarkar Feed dark overrides */
+.photo-upload-label:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-main) !important;
+}
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-main) !important;
+}
+.post-photo {
+    background: rgba(0, 0, 0, 0.4) !important;
+}
+.post-comments {
+    background: rgba(0, 0, 0, 0.2) !important;
+}
+.comment-content-wrapper {
+    background: rgba(30, 41, 59, 0.5) !important;
+}
+
+/* General Table & Admin layout adjustments in dark mode */
+.data-table-container input[type="text"],
+.filter-bar input[type="text"],
+.filter-bar select {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+}
+/* Fix select inside table */
+.data-table td select {
+    background: #1e293b !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+}
+
+/* Settings elements dark mode styling */
+.settings-row select, 
+.settings-row input[type="text"], 
+.settings-row input[type="number"] {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+}
+.toggle-container {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid var(--glass-border) !important;
+}
+.slider {
+    background-color: #475569 !important;
+}
+input:checked + .slider {
+    background-color: #10b981 !important;
+}
+

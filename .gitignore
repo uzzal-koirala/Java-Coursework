@@ -1,0 +1,16 @@
+# Compiled class files
+*.class
+
+# Eclipse specific files
+.metadata
+.classpath
+.project
+.settings/
+
+# Build folders
+build/
+bin/
+
+# Temporary files
+*.log
+*.tmp
