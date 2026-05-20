@@ -22,11 +22,11 @@ public class DashboardDAO {
         summary.put("In Review", 0);
         summary.put("Solved", 0);
         summary.put("Rejected", 0);
-        
+
         String sql = "SELECT status, COUNT(*) as count FROM gunaso WHERE user_id = ? GROUP BY status";
-        
+
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -50,13 +50,13 @@ public class DashboardDAO {
         summary.put("In Review", 0);
         summary.put("Solved", 0);
         summary.put("Rejected", 0);
-        
+
         String sql = "SELECT status, COUNT(*) as count FROM gunaso GROUP BY status";
-        
+
         try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-             
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 String status = rs.getString("status");
                 int count = rs.getInt("count");
@@ -74,17 +74,17 @@ public class DashboardDAO {
      */
     public List<Map<String, Object>> getRecentActivities(int limit) {
         List<Map<String, Object>> activities = new ArrayList<>();
-        
+
         // This is a comprehensive query to pull recent actions across the platform.
         String sql = "(SELECT 'New Complaint' as type, title as description, created_at FROM gunaso) " +
-                     "UNION ALL " +
-                     "(SELECT 'New Reply' as type, LEFT(message, 50) as description, created_at FROM replies) " +
-                     "UNION ALL " +
-                     "(SELECT 'System Update' as type, LEFT(content, 50) as description, created_at FROM sarkar_updates) " +
-                     "ORDER BY created_at DESC LIMIT ?";
-                     
+                "UNION ALL " +
+                "(SELECT 'New Reply' as type, LEFT(message, 50) as description, created_at FROM replies) " +
+                "UNION ALL " +
+                "(SELECT 'System Update' as type, LEFT(content, 50) as description, created_at FROM sarkar_updates) " +
+                "ORDER BY created_at DESC LIMIT ?";
+
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, limit);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -109,23 +109,23 @@ public class DashboardDAO {
         double rate = 0.0;
         String sqlTotal = "SELECT COUNT(*) FROM gunaso WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
         String sqlSolved = "SELECT COUNT(*) FROM gunaso WHERE status = 'Solved' AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
-        
+
         try (Connection conn = DBConnection.getConnection()) {
             int total = 0;
             int solved = 0;
-            
+
             try (Statement stmt1 = conn.createStatement(); ResultSet rs1 = stmt1.executeQuery(sqlTotal)) {
                 if (rs1.next()) {
                     total = rs1.getInt(1);
                 }
             }
-            
+
             try (Statement stmt2 = conn.createStatement(); ResultSet rs2 = stmt2.executeQuery(sqlSolved)) {
                 if (rs2.next()) {
                     solved = rs2.getInt(1);
                 }
             }
-            
+
             if (total > 0) {
                 rate = ((double) solved / total) * 100.0;
             }
@@ -141,15 +141,15 @@ public class DashboardDAO {
     public Map<String, Integer> getComplaintsByDepartment() {
         Map<String, Integer> deptStats = new HashMap<>();
         String sql = "SELECT d.dept_name, COUNT(g.id) as count " +
-                     "FROM departments d " +
-                     "LEFT JOIN gunaso g ON d.id = g.dept_id " +
-                     "GROUP BY d.id, d.dept_name " +
-                     "ORDER BY count DESC";
-                     
+                "FROM departments d " +
+                "LEFT JOIN gunaso g ON d.id = g.dept_id " +
+                "GROUP BY d.id, d.dept_name " +
+                "ORDER BY count DESC";
+
         try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-             
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 deptStats.put(rs.getString("dept_name"), rs.getInt("count"));
             }
@@ -165,8 +165,8 @@ public class DashboardDAO {
     public int getActiveUserCount() {
         String sql = "SELECT COUNT(*) FROM users WHERE status = 'Active'";
         try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -182,13 +182,13 @@ public class DashboardDAO {
      */
     public double getAverageResponseTimeHours() {
         String sql = "SELECT AVG(TIMESTAMPDIFF(HOUR, g.created_at, r.created_at)) as avg_hours " +
-                     "FROM gunaso g " +
-                     "JOIN (SELECT gunaso_id, MIN(created_at) as created_at FROM replies GROUP BY gunaso_id) r " +
-                     "ON g.id = r.gunaso_id";
-                     
+                "FROM gunaso g " +
+                "JOIN (SELECT gunaso_id, MIN(created_at) as created_at FROM replies GROUP BY gunaso_id) r " +
+                "ON g.id = r.gunaso_id";
+
         try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
             if (rs.next()) {
                 return rs.getDouble("avg_hours");
             }
