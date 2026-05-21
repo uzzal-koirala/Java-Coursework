@@ -9,7 +9,7 @@
     <!-- ================================================================
          DATABASE CREDENTIALS — change these to match your MySQL setup.
          Never hardcode credentials inside Java source files.
-         [Reload Context Trigger: Refreshing all filters and servlets]
+          [Reload Context Trigger: Refreshing all filters and servlets v2]
          ================================================================ -->
     <context-param>
         <param-name>db.url</param-name>

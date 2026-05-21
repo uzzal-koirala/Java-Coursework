@@ -84,6 +84,15 @@
                                     • <%= new java.text.SimpleDateFormat("MMM dd, yyyy h:mm a").format(update.getCreatedAt()) %>
                                 </span>
                             </div>
+                            <% if (user != null && user.getId() == update.getUserId()) { %>
+                            <form action="<%= request.getContextPath() %>/user/sarkar-updates/action" method="POST" style="margin-left: auto;" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                <input type="hidden" name="action" value="deleteUpdate">
+                                <input type="hidden" name="updateId" value="<%= update.getId() %>">
+                                <button type="submit" style="background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 1.1rem; padding: 5px;" title="Delete Post">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </form>
+                            <% } %>
                         </div>
 
                         <div class="post-content">
@@ -120,10 +129,21 @@
                                 <div class="comment-item">
                                     <img src="<%= cAvatar %>" alt="User" class="comment-avatar">
                                     <div class="comment-content-wrapper">
-                                        <div class="comment-author">
-                                            <%= comment.getUserFullName() %> 
-                                            <% if (!"CITIZEN".equals(comment.getUserRoleName())) { %>
-                                                <i class="fa-solid fa-circle-check" style="color: #4facfe; font-size: 0.8rem;" title="Authority"></i>
+                                        <div class="comment-author" style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span>
+                                                <%= comment.getUserFullName() %> 
+                                                <% if (!"CITIZEN".equals(comment.getUserRoleName())) { %>
+                                                    <i class="fa-solid fa-circle-check" style="color: #4facfe; font-size: 0.8rem;" title="Authority"></i>
+                                                <% } %>
+                                            </span>
+                                            <% if (user != null && (user.getId() == comment.getUserId() || user.getId() == update.getUserId())) { %>
+                                            <form action="<%= request.getContextPath() %>/user/sarkar-updates/action" method="POST" style="display:inline; margin-left: 10px;" onsubmit="return confirm('Delete this comment?');">
+                                                <input type="hidden" name="action" value="deleteComment">
+                                                <input type="hidden" name="commentId" value="<%= comment.getId() %>">
+                                                <button type="submit" style="background: none; border: none; color: #95a5a6; cursor: pointer; font-size: 0.85rem;" title="Delete Comment" onmouseover="this.style.color='#e74c3c'" onmouseout="this.style.color='#95a5a6'">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
                                             <% } %>
                                         </div>
                                         <div class="comment-text"><%= comment.getComment() %></div>

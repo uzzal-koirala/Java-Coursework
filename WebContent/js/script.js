@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
             }
 
-            if (password && password.value.length < 6) {
+            if (password && password.value.length > 0 && password.value.length < 6) {
                 alert('Password must be at least 6 characters long.');
                 e.preventDefault();
             }

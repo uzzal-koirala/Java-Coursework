@@ -41,6 +41,10 @@ public class SarkarUpdateActionController extends HttpServlet {
             handleLike(request, response, user);
         } else if ("comment".equals(action)) {
             handleComment(request, response, user);
+        } else if ("deleteUpdate".equals(action)) {
+            handleDeleteUpdate(request, response, user);
+        } else if ("deleteComment".equals(action)) {
+            handleDeleteComment(request, response, user);
         } else {
             response.sendRedirect(request.getContextPath() + "/user/sarkar-updates");
         }
@@ -115,6 +119,47 @@ public class SarkarUpdateActionController extends HttpServlet {
         } catch (NumberFormatException e) {
             // Log error
         }
+        if ("dashboard".equals(redirect)) {
+            response.sendRedirect(request.getContextPath() + "/dashboard");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/user/sarkar-updates");
+        }
+    }
+    private void handleDeleteUpdate(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+        String redirect = request.getParameter("redirect");
+        try {
+            int updateId = Integer.parseInt(request.getParameter("updateId"));
+            boolean deleted = updateDAO.deleteUpdate(updateId, user.getId());
+            if (deleted) {
+                sessionMsg(request, "success", "Update deleted successfully.");
+            } else {
+                sessionMsg(request, "error", "Failed to delete update or unauthorized.");
+            }
+        } catch (NumberFormatException e) {
+            sessionMsg(request, "error", "Invalid update ID.");
+        }
+        
+        if ("dashboard".equals(redirect)) {
+            response.sendRedirect(request.getContextPath() + "/dashboard");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/user/sarkar-updates");
+        }
+    }
+
+    private void handleDeleteComment(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+        String redirect = request.getParameter("redirect");
+        try {
+            int commentId = Integer.parseInt(request.getParameter("commentId"));
+            boolean deleted = updateDAO.deleteComment(commentId, user.getId());
+            if (deleted) {
+                sessionMsg(request, "success", "Comment deleted successfully.");
+            } else {
+                sessionMsg(request, "error", "Failed to delete comment or unauthorized.");
+            }
+        } catch (NumberFormatException e) {
+            sessionMsg(request, "error", "Invalid comment ID.");
+        }
+        
         if ("dashboard".equals(redirect)) {
             response.sendRedirect(request.getContextPath() + "/dashboard");
         } else {

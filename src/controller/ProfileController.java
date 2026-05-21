@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebServlet({"/user/profile/update", "/user/profile/theme"})
+@WebServlet({"/user/profile/update", "/user/profile/theme", "/user/profile/updateGov"})
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2, // 2MB
     maxFileSize = 1024 * 1024 * 10,      // 10MB
@@ -32,6 +32,9 @@ public class ProfileController extends HttpServlet {
             String activeTheme = "dark".equals(themeMode) ? "dark" : "light";
             request.getSession().setAttribute("userThemeMode", activeTheme);
             response.sendRedirect(request.getContextPath() + "/user/profile.jsp");
+            return;
+        } else if ("/user/profile/updateGov".equals(path)) {
+            handleUpdateGov(request, response);
             return;
         }
 
@@ -99,5 +102,59 @@ public class ProfileController extends HttpServlet {
             }
         }
         return "";
+    }
+
+    private void handleUpdateGov(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/auth/login.jsp");
+            return;
+        }
+
+        String fullName = request.getParameter("fullName");
+        String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
+        
+        // Handle file uploads
+        String applicationPath = request.getServletContext().getRealPath("");
+        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
+        File fileSaveDir = new File(uploadFilePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdirs();
+        }
+
+        String avatarPath = user.getAvatar();
+
+        try {
+            Part avatarPart = request.getPart("avatar");
+            if (avatarPart != null && avatarPart.getSize() > 0) {
+                String fileName = UUID.randomUUID().toString() + "_" + getFileName(avatarPart);
+                avatarPart.write(uploadFilePath + File.separator + fileName);
+                avatarPath = UPLOAD_DIR + "/" + fileName;
+            }
+
+            String hashedPassword = null;
+            if (password != null && !password.trim().isEmpty()) {
+                hashedPassword = util.PasswordUtil.hashPassword(password);
+            }
+
+            boolean success = userDAO.updateGovProfile(user.getId(), fullName, phone, avatarPath, hashedPassword);
+            
+            if (success) {
+                // Update session object
+                user.setFullName(fullName);
+                user.setPhone(phone);
+                user.setAvatar(avatarPath);
+                request.getSession().setAttribute("user", user);
+                request.getSession().setAttribute("success", "Official profile updated successfully.");
+            } else {
+                request.getSession().setAttribute("error", "Failed to update official profile.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.getSession().setAttribute("error", "Error uploading avatar: " + e.getMessage());
+        }
+        
+        response.sendRedirect(request.getContextPath() + "/user/profile.jsp");
     }
 }

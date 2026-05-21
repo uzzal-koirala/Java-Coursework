@@ -264,9 +264,7 @@
 
                 </div>
             </div>
-            
-            <jsp:include page="/components/footer.jsp" />
-        </div>
+</div>
     </div>
 
     <!-- Live Search Script -->

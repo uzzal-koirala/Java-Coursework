@@ -569,9 +569,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Reusable Footer Component -->
-            <jsp:include page="/components/footer.jsp" />
         </div>
     </div>
 

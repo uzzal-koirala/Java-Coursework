@@ -323,9 +323,7 @@
                     </div>
                 </form>
             </div>
-            
-            <jsp:include page="/components/footer.jsp" />
-        </div>
+</div>
     </div>
 
     <!-- Backup success notification toast -->

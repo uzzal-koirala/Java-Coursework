@@ -16,4 +16,8 @@ public class AuthService {
     public User login(String email, String password) {
         return userDAO.loginUser(email, password);
     }
+
+    public User getUserById(int id) {
+        return userDAO.getUserById(id);
+    }
 }

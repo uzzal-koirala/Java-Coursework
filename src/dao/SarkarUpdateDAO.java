@@ -172,4 +172,62 @@ public class SarkarUpdateDAO {
             return false;
         }
     }
+
+    public boolean deleteUpdate(int updateId, int userId) {
+        String deleteLikes = "DELETE FROM update_likes WHERE update_id = ?";
+        String deleteComments = "DELETE FROM update_comments WHERE update_id = ?";
+        String deletePost = "DELETE FROM sarkar_updates WHERE id = ? AND user_id = ?";
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement pstmt1 = conn.prepareStatement(deleteLikes);
+                 PreparedStatement pstmt2 = conn.prepareStatement(deleteComments);
+                 PreparedStatement pstmt3 = conn.prepareStatement(deletePost)) {
+                 
+                 pstmt1.setInt(1, updateId);
+                 pstmt1.executeUpdate();
+                 
+                 pstmt2.setInt(1, updateId);
+                 pstmt2.executeUpdate();
+                 
+                 pstmt3.setInt(1, updateId);
+                 pstmt3.setInt(2, userId);
+                 int affected = pstmt3.executeUpdate();
+                 
+                 if (affected > 0) {
+                     conn.commit();
+                     return true;
+                 } else {
+                     conn.rollback();
+                     return false;
+                 }
+            } catch (SQLException e) {
+                conn.rollback();
+                e.printStackTrace();
+                return false;
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteComment(int commentId, int requestingUserId) {
+        String sql = "DELETE uc FROM update_comments uc " +
+                     "JOIN sarkar_updates su ON uc.update_id = su.id " +
+                     "WHERE uc.id = ? AND (uc.user_id = ? OR su.user_id = ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setInt(1, commentId);
+            pstmt.setInt(2, requestingUserId);
+            pstmt.setInt(3, requestingUserId);
+            
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

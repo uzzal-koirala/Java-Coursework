@@ -27,7 +27,7 @@
     
     // Check active pages
     boolean isDashboard = currentURI.endsWith("dashboard.jsp") || currentURI.endsWith("/dashboard") || currentURI.endsWith("/gov-dashboard") || currentURI.endsWith("gov-dashboard.jsp");
-    boolean isLodge = currentURI.endsWith("create-gunaso.jsp");
+
     boolean isMyGunaso = currentURI.endsWith("my-gunaso") || currentURI.endsWith("my-gunaso.jsp");
     boolean isProfile = currentURI.endsWith("profile.jsp");
     boolean isManageUsers = currentURI.endsWith("manage-users.jsp");
@@ -54,7 +54,7 @@
             <li><a href="<%= context %>/dashboard" class="<%= isDashboard ? "active" : "" %>"><i class="fa-solid fa-house"></i> Dashboard</a></li>
             <li><a href="<%= context %>/user/sarkar-updates" class="<%= isSarkarUpdates ? "active" : "" %>"><i class="fa-solid fa-bullhorn"></i> Sarkar Updates</a></li>
             <li><a href="<%= context %>/user/my-gunaso" class="<%= isMyGunaso ? "active" : "" %>"><i class="fa-solid fa-list-check"></i> Mero Gunaso</a></li>
-            <li><a href="<%= context %>/user/create-gunaso.jsp" class="<%= isLodge ? "active" : "" %>"><i class="fa-solid fa-pen-to-square"></i> Lodge Grievance</a></li>
+
             <li><a href="<%= context %>/user/profile.jsp" class="<%= isProfile ? "active" : "" %>"><i class="fa-solid fa-user-gear"></i> Settings</a></li>
         <% } else if ("SUPER_ADMIN".equals(role)) { %>
             <li><a href="<%= context %>/dashboard" class="<%= isDashboard ? "active" : "" %>"><i class="fa-solid fa-house"></i> Dashboard</a></li>
@@ -67,10 +67,8 @@
         <% } else { %>
             <li><a href="<%= context %>/gov-dashboard" class="<%= isDashboard ? "active" : "" %>"><i class="fa-solid fa-house"></i> Dashboard</a></li>
             <li><a href="<%= context %>/user/sarkar-updates" class="<%= isSarkarUpdates ? "active" : "" %>"><i class="fa-solid fa-bullhorn"></i> Sarkar Updates</a></li>
-            <li><a href="<%= context %>/admin/manage-gunaso.jsp" class="<%= isManageGunaso ? "active" : "" %>"><i class="fa-solid fa-list-check"></i> Assigned Tickets</a></li>
-            <li><a href="<%= context %>/admin/verify-requests.jsp" class="<%= isVerify ? "active" : "" %>"><i class="fa-solid fa-id-card-clip"></i> Verification Reqs</a></li>
-            <li><a href="<%= context %>/admin/reports.jsp" class="<%= isReports ? "active" : "" %>"><i class="fa-solid fa-chart-line"></i> Reports</a></li>
-            <li><a href="<%= context %>/user/profile.jsp" class="<%= isProfile ? "active" : "" %>"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+            <li><a href="<%= context %>/admin/manage-gunaso.jsp" class="<%= isManageGunaso ? "active" : "" %>"><i class="fa-solid fa-list-check"></i> View Gunaso</a></li>
+            <li><a href="<%= context %>/user/profile.jsp" class="<%= isProfile ? "active" : "" %>"><i class="fa-solid fa-user-gear"></i> Settings</a></li>
         <% } %>
     </ul>
 

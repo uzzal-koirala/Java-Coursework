@@ -68,7 +68,7 @@ body {
     border-radius: 100px;
 }
 .btn-login { padding: 10px 20px; background: transparent; border: 2px solid var(--primary); color: var(--primary); border-radius: 8px; font-weight: 600; transition: all 0.3s ease; }
-.btn-login:hover { background: var(--primary); color: var(--white); }
+.btn-login:hover { background: var(--primary); color: var(--white) !important; }
 .btn-register { padding: 10px 20px; background: var(--primary); border: 2px solid var(--primary); color: var(--white) !important; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3); }
 .btn-register:hover { background: #172554; border-color: #172554; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4); }
 

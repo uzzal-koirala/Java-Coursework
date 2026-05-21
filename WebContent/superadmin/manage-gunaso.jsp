@@ -142,9 +142,7 @@
                     </table>
                 </div>
             </div>
-            
-            <jsp:include page="/components/footer.jsp" />
-        </div>
+</div>
     </div>
 
     <!-- View Gunaso Iframe Modal -->

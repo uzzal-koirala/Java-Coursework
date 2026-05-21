@@ -292,7 +292,11 @@ public class GunasoController extends HttpServlet {
         } else {
             request.getSession().setAttribute("error", "Failed to add reply.");
         }
-        response.sendRedirect(request.getContextPath() + "/gunaso/view?id=" + gunasoId);
+        String redirectUrl = request.getContextPath() + "/gunaso/view?id=" + gunasoId;
+        if ("true".equals(request.getParameter("popup"))) {
+            redirectUrl += "&popup=true";
+        }
+        response.sendRedirect(redirectUrl);
     }
 
     // -----------------------------------------------------------------------

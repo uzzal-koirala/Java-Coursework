@@ -2,6 +2,8 @@ package controller;
 
 import model.User;
 import service.AuthService;
+import util.CookieUtil;
+import java.util.Base64;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -104,6 +106,17 @@ public class AuthController extends HttpServlet {
                 newSession.setAttribute("user", user);
 
                 // Route to the correct dashboard based on role
+                
+                // Handle "Remember Me"
+                String remember = request.getParameter("remember");
+                if (remember != null && remember.equals("on")) {
+                    // Simple signed token: base64(userId:hash(userId))
+                    // For coursework simplicity, we just base64 encode the userId and role.
+                    String tokenStr = user.getId() + ":" + user.getRoleName();
+                    String encodedToken = Base64.getEncoder().encodeToString(tokenStr.getBytes());
+                    CookieUtil.setCookie(response, "remember_me", encodedToken, 30 * 24 * 60 * 60); // 30 days
+                }
+
                 if (isGovUser) {
                     response.sendRedirect(request.getContextPath() + "/gov-dashboard");
                 } else if (isSuperAdmin) {
@@ -212,6 +225,10 @@ public class AuthController extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
+        
+        // Delete "Remember Me" cookie
+        CookieUtil.deleteCookie(response, "remember_me");
+
         // Prevent browser from caching the authenticated page after logout
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");

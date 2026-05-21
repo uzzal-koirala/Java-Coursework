@@ -56,11 +56,7 @@
                         <h2>Welcome back, <%= displayName %>!</h2>
                         <p>Your voice drives better governance. Track your existing grievances or file a new one instantly using our secure portal.</p>
                     </div>
-                    <div class="hero-actions">
-                        <a href="create-gunaso.jsp" class="btn-lodge">
-                            <i class="fa-solid fa-bolt"></i> Lodge Grievance
-                        </a>
-                    </div>
+
                 </div>
 
                 <% 

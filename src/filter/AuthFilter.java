@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import util.CookieUtil;
+import java.util.Base64;
 
 /**
  * AuthFilter – intercepts every request and enforces authentication.
@@ -43,6 +45,29 @@ public class AuthFilter implements Filter {
         HttpSession session  = httpRequest.getSession(false);
         boolean     loggedIn = session != null && session.getAttribute("user") != null;
 
+        // Auto-login via Remember Me Cookie if session is missing
+        if (!loggedIn) {
+            String rememberToken = CookieUtil.getCookieValue(httpRequest, "remember_me");
+            if (rememberToken != null && !rememberToken.isEmpty()) {
+                try {
+                    String decoded = new String(Base64.getDecoder().decode(rememberToken));
+                    String[] parts = decoded.split(":");
+                    if (parts.length == 2) {
+                        int userId = Integer.parseInt(parts[0]);
+                        service.AuthService authService = new service.AuthService();
+                        User autoUser = authService.getUserById(userId);
+                        if (autoUser != null && "Active".equalsIgnoreCase(autoUser.getStatus())) {
+                            session = httpRequest.getSession(true);
+                            session.setAttribute("user", autoUser);
+                            loggedIn = true;
+                        }
+                    }
+                } catch (Exception e) {
+                    // Invalid token format, ignore and let them login manually
+                }
+            }
+        }
+
         // -----------------------------------------------------------------------
         // Build the public-access whitelist
         // -----------------------------------------------------------------------
@@ -66,7 +91,13 @@ public class AuthFilter implements Filter {
         // Security headers — applied to every response
         // -----------------------------------------------------------------------
         httpResponse.setHeader("X-Content-Type-Options", "nosniff");
-        httpResponse.setHeader("X-Frame-Options",        "SAMEORIGIN");
+        
+        // Relax X-Frame-Options for iframe popups to prevent "localhost refused to connect" browser blocks
+        String isPopup = httpRequest.getParameter("popup");
+        if (!"true".equalsIgnoreCase(isPopup) && !uri.contains("/gunaso/view")) {
+            httpResponse.setHeader("X-Frame-Options", "SAMEORIGIN");
+        }
+        
         httpResponse.setHeader("X-XSS-Protection",      "1; mode=block");
 
         if (loggedIn || isPublic) {

@@ -36,12 +36,101 @@
                         badgeClass = "badge-rejected";
                         icon = "fa-circle-xmark";
                     }
+
+                    String error = (String) session.getAttribute("error");
+                    if (error != null) {
+                        session.removeAttribute("error");
+                    }
+                    String success = (String) session.getAttribute("success");
+                    if (success != null) {
+                        session.removeAttribute("success");
+                    }
+
+                    boolean isCitizen = u != null && "CITIZEN".equals(u.getRoleName());
                 %>
 
-                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: start;">
+                <style>
+                    .custom-file-upload {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        border: 2px dashed #cbd5e1;
+                        border-radius: 12px;
+                        padding: 25px 20px;
+                        background: #f8fafc;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        text-align: center;
+                    }
+                    .custom-file-upload:hover {
+                        border-color: var(--primary-light);
+                        background: rgba(59,130,246,0.02);
+                    }
+                    .custom-file-upload i {
+                        font-size: 2.2rem;
+                        color: var(--primary-light);
+                        margin-bottom: 12px;
+                    }
+                    .custom-file-upload span {
+                        color: var(--text-main);
+                        font-weight: 500;
+                    }
+                    .custom-file-upload small {
+                        color: var(--text-light);
+                        margin-top: 5px;
+                    }
+                    input[type="file"] {
+                        display: none;
+                    }
+                    /* Toggle switch styling */
+                    .switch {
+                        position: relative;
+                        display: inline-block;
+                        width: 44px;
+                        height: 24px;
+                    }
+
+                    .switch input { 
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+
+                    .slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0; left: 0; right: 0; bottom: 0;
+                        background-color: #cbd5e1;
+                        transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+                        border-radius: 24px;
+                    }
+
+                    .slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 18px;
+                        width: 18px;
+                        left: 3px;
+                        bottom: 3px;
+                        background-color: white;
+                        transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+                        border-radius: 50%;
+                    }
+
+                    input:checked + .slider {
+                        background-color: var(--primary);
+                    }
+
+                    input:checked + .slider:before {
+                        transform: translateX(20px);
+                    }
+                </style>
+                
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: start; justify-content: center;">
                     
                     <!-- Left Column: Profile Card + Theme Settings -->
-                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px; <%= !isCitizen ? "max-width: 600px; margin: 0 auto;" : "" %>">
                         
                         <!-- Premium Profile Info Card -->
                         <div class="stat-card" style="flex-direction: column; align-items: center; padding: 40px 20px; text-align: center; background: var(--white); position: relative; overflow: hidden; margin-bottom: 0;">
@@ -56,8 +145,8 @@
                             <% } %>
                             
                             <h2 style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 5px; font-weight: 700;"><%= u.getFullName() %></h2>
-                            <div class="badge <%= badgeClass %>" style="font-size: 0.85rem; padding: 6px 14px; margin-bottom: 25px;">
-                                <i class="fa-solid <%= icon %>" style="margin-right: 5px;"></i> <%= vStatus %> Citizen
+                            <div class="badge <%= isCitizen ? badgeClass : "badge-resolved" %>" style="font-size: 0.85rem; padding: 6px 14px; margin-bottom: 25px;">
+                                <i class="fa-solid <%= isCitizen ? icon : "fa-shield-halved" %>" style="margin-right: 5px;"></i> <%= isCitizen ? vStatus + " Citizen" : "Authorized Official" %>
                             </div>
                             
                             <div style="width: 100%; text-align: left; background: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0;">
@@ -116,102 +205,19 @@
 
                     </div>
 
+                    <% if (isCitizen) { %>
                     <!-- Verification Form Container -->
                     <div class="data-table-container" style="padding: 40px; background: var(--white);">
                         <h3 style="margin-bottom: 10px; color: var(--primary); font-size: 1.5rem; font-weight: 700;">Identity Verification</h3>
                         <p style="color: var(--text-light); margin-bottom: 30px; font-size: 0.95rem;">Upload valid documents to verify your identity and unlock grievance lodging capabilities.</p>
                         
-                        <% 
-                            String error = (String) session.getAttribute("error");
-                            if (error != null) {
-                        %>
+                        <% if (error != null) { %>
                             <div class="message message-error" style="background: rgba(239, 68, 68, 0.1); color: var(--secondary); padding: 15px; border-radius: 8px; margin-bottom: 25px;"><i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> <%= error %></div>
-                        <% session.removeAttribute("error"); } %>
+                        <% } %>
                         
-                        <% 
-                            String success = (String) session.getAttribute("success");
-                            if (success != null) {
-                        %>
+                        <% if (success != null) { %>
                             <div class="message message-success" style="background: rgba(16, 185, 129, 0.1); color: #059669; padding: 15px; border-radius: 8px; margin-bottom: 25px;"><i class="fa-solid fa-circle-check" style="margin-right: 8px;"></i> <%= success %></div>
-                        <% session.removeAttribute("success"); } %>
-
-                        <style>
-                            .custom-file-upload {
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: center;
-                                border: 2px dashed #cbd5e1;
-                                border-radius: 12px;
-                                padding: 25px 20px;
-                                background: #f8fafc;
-                                cursor: pointer;
-                                transition: all 0.3s ease;
-                                text-align: center;
-                            }
-                            .custom-file-upload:hover {
-                                border-color: var(--primary-light);
-                                background: rgba(59,130,246,0.02);
-                            }
-                            .custom-file-upload i {
-                                font-size: 2.2rem;
-                                color: var(--primary-light);
-                                margin-bottom: 12px;
-                            }
-                            .custom-file-upload span {
-                                color: var(--text-main);
-                                font-weight: 500;
-                            }
-                            .custom-file-upload small {
-                                color: var(--text-light);
-                                margin-top: 5px;
-                            }
-                            input[type="file"] {
-                                display: none;
-                            }
-                            /* Toggle switch styling */
-                            .switch {
-                                position: relative;
-                                display: inline-block;
-                                width: 44px;
-                                height: 24px;
-                            }
-
-                            .switch input { 
-                                opacity: 0;
-                                width: 0;
-                                height: 0;
-                            }
-
-                            .slider {
-                                position: absolute;
-                                cursor: pointer;
-                                top: 0; left: 0; right: 0; bottom: 0;
-                                background-color: #cbd5e1;
-                                transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
-                                border-radius: 24px;
-                            }
-
-                            .slider:before {
-                                position: absolute;
-                                content: "";
-                                height: 18px;
-                                width: 18px;
-                                left: 3px;
-                                bottom: 3px;
-                                background-color: white;
-                                transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
-                                border-radius: 50%;
-                            }
-
-                            input:checked + .slider {
-                                background-color: var(--primary);
-                            }
-
-                            input:checked + .slider:before {
-                                transform: translateX(20px);
-                            }
-                        </style>
+                        <% } %>
 
                         <% if("Unverified".equals(vStatus)) { %>
                         <form action="<%= request.getContextPath() %>/user/profile/update" method="POST" enctype="multipart/form-data">
@@ -259,14 +265,80 @@
                             </div>
                         <% } else { %>
                             <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); padding: 40px 30px; border-radius: 16px; text-align: center;">
-                                <div style="width: 80px; height: 80px; background: rgba(16, 185, 129, 0.1); color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 20px;">
-                                    <i class="fa-solid fa-shield-check"></i>
-                                </div>
-                                <h3 style="color: #059669; margin-bottom: 12px; font-size: 1.4rem;">Fully Verified Citizen</h3>
+                                <div style="width: 100px; height: 100px; border-radius: 50%; background: #ecfdf5; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                                <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: #10b981;"></i>
+                            </div>
+                            <h3 style="color: #059669; margin-bottom: 12px; font-size: 1.4rem;">Fully Verified Citizen</h3>
                                 <p style="color: var(--text-light); line-height: 1.7; font-size: 1.05rem; max-width: 400px; margin: 0 auto;">Your identity has been successfully verified. You have full, unrestricted access to lodge and track grievances in the portal.</p>
                             </div>
                         <% } %>
                     </div>
+                    <% } else { %>
+                    <!-- Government Official Profile Update Container -->
+                    <div class="data-table-container" style="padding: 40px; background: var(--white);">
+                        <h3 style="margin-bottom: 10px; color: var(--primary); font-size: 1.5rem; font-weight: 700;">Update Official Profile</h3>
+                        <p style="color: var(--text-light); margin-bottom: 30px; font-size: 0.95rem;">Update your name, contact phone, profile avatar, or change your password.</p>
+                        
+                        <% if (error != null) { %>
+                            <div class="message message-error" style="background: rgba(239, 68, 68, 0.1); color: var(--secondary); padding: 15px; border-radius: 8px; margin-bottom: 25px;"><i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> <%= error %></div>
+                        <% } %>
+                        
+                        <% if (success != null) { %>
+                            <div class="message message-success" style="background: rgba(16, 185, 129, 0.1); color: #059669; padding: 15px; border-radius: 8px; margin-bottom: 25px;"><i class="fa-solid fa-circle-check" style="margin-right: 8px;"></i> <%= success %></div>
+                        <% } %>
+
+                        <form action="<%= request.getContextPath() %>/user/profile/updateGov" method="POST" enctype="multipart/form-data">
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
+                                <div class="form-group">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main);">Full Name <span style="color: var(--secondary);">*</span></label>
+                                    <input type="text" name="fullName" value="<%= u.getFullName() %>" required style="width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; background: #f8fafc; outline: none; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-light)'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main);">Phone Number <span style="color: var(--secondary);">*</span></label>
+                                    <input type="text" name="phone" value="<%= u.getPhone() %>" required style="width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; background: #f8fafc; outline: none; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-light)'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 25px; margin-bottom: 30px;">
+                                <div class="form-group">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main);">Profile Avatar</label>
+                                    <label class="custom-file-upload">
+                                        <input type="file" name="avatar" accept="image/*" onchange="this.nextElementSibling.nextElementSibling.innerText = this.files[0].name">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Click to browse</span>
+                                        <small>PNG, JPG up to 5MB (Optional)</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.3s; width: 100%; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                                <i class="fa-solid fa-user-pen" style="margin-right: 8px;"></i> Update Profile Details
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Security Settings Container -->
+                    <div class="data-table-container" style="padding: 40px; background: var(--white); margin-top: 30px;">
+                        <h3 style="margin-bottom: 10px; color: var(--primary); font-size: 1.5rem; font-weight: 700;">Security Settings</h3>
+                        <p style="color: var(--text-light); margin-bottom: 30px; font-size: 0.95rem;">Change your password to keep your official account secure.</p>
+                        
+                        <form action="<%= request.getContextPath() %>/user/profile/updateGov" method="POST" enctype="multipart/form-data">
+                            <!-- Hidden inputs to preserve existing profile data -->
+                            <input type="hidden" name="fullName" value="<%= u.getFullName() %>">
+                            <input type="hidden" name="phone" value="<%= u.getPhone() %>">
+                            
+                            <div class="form-group" style="margin-bottom: 25px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main);">New Password <span style="color: var(--secondary);">*</span></label>
+                                <input type="password" name="password" placeholder="Enter new password (min 6 chars)" required minlength="6" style="width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; background: #f8fafc; outline: none; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-light)'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
+                            </div>
+
+                            <button type="submit" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.3s; width: 100%; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.25);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                                <i class="fa-solid fa-lock" style="margin-right: 8px;"></i> Change Password
+                            </button>
+                        </form>
+                    </div>
+                    <% } %>
                 </div>
             </div>
         </main>

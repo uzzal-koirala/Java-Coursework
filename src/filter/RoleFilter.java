@@ -32,8 +32,10 @@ public class RoleFilter implements Filter {
 
         if ("SUPER_ADMIN".equals(role)) {
             authorized = true;
-        } else if (uri.contains("/user/") && "CITIZEN".equals(role)) {
-            authorized = true;
+        } else if (uri.contains("/user/")) {
+            if ("CITIZEN".equals(role) || "WADA_ADAKSHYA".equals(role) || "NAGAR_PRAMUKH".equals(role) || "PRIME_MINISTER".equals(role)) {
+                authorized = true;
+            }
         } else if (uri.contains("/superadmin/") && "SUPER_ADMIN".equals(role)) {
             authorized = true;
         } else if (uri.contains("/admin/")) {
