@@ -35,3 +35,4 @@
         <a href="<%= request.getContextPath() %>/auth/logout" class="btn" style="padding: 8px 15px; font-size: 0.8rem; width: auto;">Logout</a>
     </div>
 </div>
+// Done by Manjila

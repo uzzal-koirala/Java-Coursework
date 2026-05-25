@@ -35,3 +35,4 @@ public class Notification {
     public String getActorAvatar() { return actorAvatar; }
     public void setActorAvatar(String actorAvatar) { this.actorAvatar = actorAvatar; }
 }
+// Done by Manjila
