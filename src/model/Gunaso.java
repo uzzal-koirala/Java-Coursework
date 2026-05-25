@@ -53,3 +53,4 @@ public class Gunaso {
     public String getDeptName() { return deptName; }
     public void setDeptName(String deptName) { this.deptName = deptName; }
 }
+// Done by Rojina

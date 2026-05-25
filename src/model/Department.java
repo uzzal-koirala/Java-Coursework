@@ -18,3 +18,4 @@ public class Department {
     public String getDeptName() { return deptName; }
     public void setDeptName(String deptName) { this.deptName = deptName; }
 }
+// dONE by Rojina
